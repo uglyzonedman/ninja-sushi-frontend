@@ -1,0 +1,36 @@
+.navigation {
+  max-width: 816px;
+  height: 95px;
+  margin: 16px auto;
+  background: #ffffff;
+  border-radius: 12px;
+  &__content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    &__item {
+      padding: 6px 16px;
+      display: flex;
+      margin-top: 6px;
+      width: 91px;
+      height: 83px;
+      a {
+        text-decoration: none;
+      }
+      &__link {
+        &__img {
+          text-align: center;
+          width: 100%;
+          height: 44px;
+        }
+        p {
+          font-style: normal;
+          font-weight: 500;
+          font-size: 16px;
+          line-height: 24px;
+          color: #1d1d1f;
+        }
+      }
+    }
+  }
+}

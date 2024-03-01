@@ -1,0 +1,14 @@
+
+
+const ClockSvg = () => {
+    return (
+        <svg width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg" >
+            <path d="M9.99935 18.8581C14.6017 18.8581 18.3327 15.1271 18.3327 10.5247C18.3327 5.92237 14.6017 2.19141 9.99935 2.19141C5.39698 2.19141 1.66602 5.92237 1.66602 10.5247C1.66602 15.1271 5.39698 18.8581 9.99935 18.8581Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M10 5.52344V10.5234L13.3333 12.1901" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+
+    )
+}
+
+export default ClockSvg
+
