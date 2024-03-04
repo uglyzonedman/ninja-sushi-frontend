@@ -1,0 +1,53 @@
+.wrapper {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 3;
+  opacity: 0.6;
+  background: #000;
+}
+
+.main {
+  flex: 1 1 auto;
+}
+
+.desc {
+  max-width: 778px;
+  width: 100%;
+  margin: 64px auto auto auto;
+
+  p {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    color: #9e9e9e;
+  }
+
+  button {
+    span {
+      font-style: normal;
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 24px;
+      color: #00cc2d;
+      margin-right: 4px;
+    }
+
+    cursor: pointer;
+    background: none;
+    border: none;
+    display: flex;
+    align-items: center;
+    margin: 12px auto 36px 80%;
+  }
+}

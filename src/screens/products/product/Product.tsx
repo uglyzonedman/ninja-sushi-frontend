@@ -1,15 +1,12 @@
-import Image from "next/image";
 import React from "react";
-import sushi from "../../../../assets/sushi.png";
-import styles from "./HomeProductsProduct.module.scss";
+import styles from "./Product.module.scss";
+import Image from "next/image";
 import Link from "next/link";
-import classNames from "classnames";
 import FavouriteIco from "@/src/components/svgs/FavouriteSvg";
 import PlusIco from "@/src/components/svgs/PlusSvg";
+import classNames from "classnames";
 import { IProduct } from "@/src/interfaces/product.interface";
-import { useMutation, useQuery } from "@tanstack/react-query";
-import { ProductService } from "@/src/services/product.service";
-const HomeProductsProduct = ({
+const Product = ({
   createdAt,
   description,
   id,
@@ -20,34 +17,7 @@ const HomeProductsProduct = ({
   updatedAt,
   volume,
   weight,
-  refetch,
 }: IProduct) => {
-  const { mutate } = useMutation({
-    mutationKey: ["change-favorite"],
-    mutationFn: (id: string) => ProductService.changeFavorite(id),
-    onSuccess: () => {
-      refetch();
-      refetchFavorites();
-    },
-  });
-
-  const {
-    data: favorites,
-    isLoading: isLoadingFavorites,
-    refetch: refetchFavorites,
-  } = useQuery({
-    queryKey: ["get-favorite-by-acc-id"],
-    queryFn: () => ProductService.getFavoriteById(),
-  });
-
-  const checkFavoriteById = (id: string) => {
-    return isLoadingFavorites
-      ? []
-      : favorites.items.find((item) => item.productId == id)
-      ? true
-      : false;
-  };
-
   return (
     <div className={styles.product}>
       <div className={styles.product__image}>
@@ -80,14 +50,7 @@ const HomeProductsProduct = ({
         </p>
         <div className={styles.product__footer__buttons}>
           <button
-            className={classNames(
-              checkFavoriteById(id)
-                ? styles.product__footer__buttons__favouriteaccept
-                : styles.product__footer__buttons__favourite
-            )}
-            onClick={() => {
-              mutate(id);
-            }}
+            className={classNames(styles.product__footer__buttons__favourite)}
           >
             <FavouriteIco fill={"#ffffff"} color={"#ffffff"} />
           </button>
@@ -100,4 +63,4 @@ const HomeProductsProduct = ({
   );
 };
 
-export default HomeProductsProduct;
+export default Product;

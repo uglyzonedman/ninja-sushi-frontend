@@ -13,7 +13,7 @@ const Navigation = () => {
     <nav className={styles.navigation}>
       <ul className={styles.navigation__content}>
         <li className={styles.navigation__content__item}>
-          <Link href="/products/rolls">
+          <Link href="/products/roll">
             <div className={styles.navigation__content__item__link}>
               <div className={styles.navigation__content__item__link__img}>
                 <RollsIco />
@@ -23,7 +23,7 @@ const Navigation = () => {
           </Link>
         </li>
         <li className={styles.navigation__content__item}>
-          <Link href="/products/sushies">
+          <Link href="/products/sushi">
             <div className={styles.navigation__content__item__link}>
               <div className={styles.navigation__content__item__link__img}>
                 <SushiIco />
@@ -34,7 +34,7 @@ const Navigation = () => {
           </Link>
         </li>
         <li className={styles.navigation__content__item}>
-          <Link href="/products/sets">
+          <Link href="/products/set">
             <div className={styles.navigation__content__item__link}>
               <div className={styles.navigation__content__item__link__img}>
                 <SettsIco />
@@ -44,17 +44,17 @@ const Navigation = () => {
           </Link>
         </li>
         <li className={styles.navigation__content__item}>
-          <Link href="/products/1">
+          <Link href="/products/snack">
             <div className={styles.navigation__content__item__link}>
               <div className={styles.navigation__content__item__link__img}>
                 <BoulsIco />
               </div>
-              <p>Боулы</p>
+              <p>Закуски</p>
             </div>
           </Link>
         </li>
         <li className={styles.navigation__content__item}>
-          <Link href="/products/1">
+          <Link href="/products/drink">
             <div className={styles.navigation__content__item__link}>
               <div className={styles.navigation__content__item__link__img}>
                 <DrinksIco />
@@ -64,7 +64,7 @@ const Navigation = () => {
           </Link>
         </li>
         <li className={styles.navigation__content__item}>
-          <Link href="/products/1">
+          <Link href="/products/404">
             <div className={styles.navigation__content__item__link}>
               <div className={styles.navigation__content__item__link__img}>
                 <SousIco />
@@ -74,7 +74,7 @@ const Navigation = () => {
           </Link>
         </li>
         <li className={styles.navigation__content__item}>
-          <Link href="/products/1">
+          <Link href="/products/404">
             <div className={styles.navigation__content__item__link}>
               <div className={styles.navigation__content__item__link__img}>
                 <UnkownIco />
@@ -84,7 +84,7 @@ const Navigation = () => {
           </Link>
         </li>
         <li className={styles.navigation__content__item}>
-          <Link href="/products/1">
+          <Link href="/products/404">
             <div className={styles.navigation__content__item__link}>
               <div className={styles.navigation__content__item__link__img}>
                 <UnkownIco />
