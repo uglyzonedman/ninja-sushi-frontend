@@ -2,7 +2,6 @@ import create from "zustand";
 import { persist, devtools, createJSONStorage } from "zustand/middleware";
 import Cookies from "js-cookie";
 import { AccountService } from "../services/account.service";
-import { getLocaleStorageAuth } from "../hooks/hooks";
 
 export interface AuthState {
   user: any;
@@ -14,7 +13,13 @@ export interface AuthState {
   register: any;
   loginGoogle: any;
 }
+export const getLocaleStorageAuth = () => {
+  const authData = window && localStorage ? localStorage.getItem("auth") : "";
+  const parsedAuthData = JSON.parse(authData);
+  const user = parsedAuthData?.state?.user;
 
+  return user;
+};
 export const authZustand = create<AuthState>()(
   devtools(
     persist(

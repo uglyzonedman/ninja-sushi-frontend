@@ -9,6 +9,7 @@ import PlusIco from "@/src/components/svgs/PlusSvg";
 import { IProduct } from "@/src/interfaces/product.interface";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { ProductService } from "@/src/services/product.service";
+import { useAuth } from "@/src/hooks/hooks";
 const HomeProductsProduct = ({
   createdAt,
   description,
@@ -30,7 +31,7 @@ const HomeProductsProduct = ({
       refetchFavorites();
     },
   });
-
+  const { user } = useAuth();
   const {
     data: favorites,
     isLoading: isLoadingFavorites,
@@ -38,12 +39,15 @@ const HomeProductsProduct = ({
   } = useQuery({
     queryKey: ["get-favorite-by-acc-id"],
     queryFn: () => ProductService.getFavoriteById(),
+    enabled: !!user,
   });
+
+  console.log("favorites", favorites);
 
   const checkFavoriteById = (id: string) => {
     return isLoadingFavorites
       ? []
-      : favorites.items.find((item) => item.productId == id)
+      : favorites?.items.find((item) => item.productId == id)
       ? true
       : false;
   };
