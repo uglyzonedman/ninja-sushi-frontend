@@ -6,13 +6,16 @@
   &__content {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     &__left {
-      margin-right: 100px;
+      width: 650px;
+      height: 450px;
       img {
       }
     }
     &__right {
       margin-top: 121px;
+      width: 726px;
       &__switch {
         margin-top: 18px;
         margin-bottom: 32px;
@@ -134,12 +137,15 @@
         font-size: 16px;
         line-height: 24px;
         color: #1d1d1f;
-
         &__items {
           margin-top: 12px;
           display: flex;
-          position: relative;
+          width: 700px;
+          justify-content: space-between;
           &__arrow {
+            right: -40px;
+            top: 50%;
+            position: absolute;
             cursor: pointer;
             background: #ffffff;
             border-radius: 8px;
@@ -147,16 +153,17 @@
             padding: 0 18px;
           }
           &__item {
+            flex: 0 1 33%;
             padding: 12px;
             background: #ffffff;
             border-radius: 8px;
             margin-right: 8px;
             img {
+              display: block;
               margin: 0 auto;
             }
             p {
-              max-width: 99px;
-              width: 100%;
+              margin-top: 10px;
               font-style: normal;
               font-weight: 500;
               font-size: 14px;

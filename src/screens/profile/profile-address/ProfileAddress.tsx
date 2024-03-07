@@ -1,33 +1,58 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "../profile-layout/ProfileLayout.module.scss";
 import AddressIco from "@/src/components/svgs/AddressSvg";
 import Image from "next/image";
 import plus from "../../../assets/plus.png";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { AddressService } from "@/src/services/address.service";
+import { IAddress } from "@/src/interfaces/address.interface";
+import basket from "../../../assets/basket.png";
+import map from "../../../assets/map.png";
+import AddressModal from "@/src/components/ui/address-modal/AddressModal";
+import Overlay from "@/src/components/ui/overlay/Overlay";
 const ProfileAddress = () => {
+  const {
+    data: address,
+    isLoading: isLoadingAddress,
+    refetch,
+  } = useQuery({
+    queryKey: ["get-address"],
+    queryFn: () => AddressService.getByUser(),
+  });
+
+  const { mutate } = useMutation({
+    mutationKey: ["delete-address"],
+    mutationFn: (id: string) => AddressService.deleteAddress(id),
+    onSuccess: () => {
+      refetch();
+    },
+  });
+  const [showAddressModal, setShowAddressModal] = useState(false);
   return (
     <>
-      {/* {showAddressModal ? <div className={styles.profile__overlay}></div> : ""} */}
       <div className={styles.profile__content__right__text}>
         <h3 className={styles.profile__content__right__text__title}>
           Адрес доставки
         </h3>
         <button
-          //   onClick={() => setShowAdressModal(true)}
+          onClick={() => setShowAddressModal((prev) => !prev)}
           className={styles.profile__content__right__text__button}
         >
           <p>Новый адрес</p>
           <Image src={plus} alt="plus" />
         </button>
       </div>
-      {/* {showAddressModal ? (
-        <AddressModal setShowAdressModal={setShowAdressModal} />
-      ) : (
-        ""
-      )} */}
-      {/* {isLoadingAddress ? (
+      {showAddressModal && (
+        <AddressModal
+          setShowAddressModal={setShowAddressModal}
+          refetch={refetch}
+        />
+      )}
+      {showAddressModal && <Overlay />}
+      {isLoadingAddress ? (
         0
-      ) : address?.length !== 0 ? (
-        address?.map((item: IAddress) => (
+      ) : address?.items.length !== 0 ? (
+        address?.items.map((item) => (
           <div className={styles.profile__content__right__item}>
             <Image
               className={styles.profile__content__right__item__map}
@@ -43,7 +68,9 @@ const ProfileAddress = () => {
               </span>
             </div>
             <button
-              onClick={() => {}}
+              onClick={() => {
+                mutate(item.id);
+              }}
               className={styles.profile__content__right__item__button}
             >
               <Image src={basket} alt="basket" />
@@ -61,7 +88,7 @@ const ProfileAddress = () => {
             </p>
           </div>
         </div>
-      )} */}
+      )}
     </>
   );
 };

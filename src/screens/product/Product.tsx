@@ -12,6 +12,7 @@ import { usePathname } from "next/navigation";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { ProductService } from "@/src/services/product.service";
 import classNames from "classnames";
+import { IngredientsService } from "@/src/services/ingredients.service";
 const Product = () => {
   const pathName = usePathname();
 
@@ -36,6 +37,13 @@ const Product = () => {
     queryFn: () => ProductService.getFavoriteById(),
   });
 
+  const { data: ingredients, isLoading: isLoadingIngrediens } = useQuery({
+    queryKey: ["get-all-ingredients"],
+    queryFn: () => IngredientsService.getAll(),
+  });
+
+  console.log("ingredients", ingredients?.items);
+
   const { mutate } = useMutation({
     mutationKey: ["change-favorite"],
     mutationFn: (id: string | null | undefined) =>
@@ -48,7 +56,7 @@ const Product = () => {
   const checkFavoriteById = (id: string | null | undefined) => {
     return isLoadingFavorites
       ? []
-      : favorites.items.find((item) => item.productId == id)
+      : favorites?.items.find((item) => item.productId == id)
       ? true
       : false;
   };
@@ -75,7 +83,15 @@ const Product = () => {
       photo: fish,
     },
   ];
+  const descriptionUpdate = product?.item.description.toLowerCase().split(", ");
 
+  const ingredientsView = isLoadingIngrediens
+    ? []
+    : ingredients?.items.filter((item) =>
+        descriptionUpdate?.includes(item.name.toLowerCase())
+      );
+  console.log(descriptionUpdate);
+  console.log("ingrediesntView", ingredientsView);
   return (
     <div className={styles.product}>
       <div className={styles.product__container}>
@@ -86,6 +102,7 @@ const Product = () => {
               width={645}
               height={416}
               alt={"item"}
+              style={{ width: "100%", height: "100%" }}
             />
           </div>
           <div className={styles.product__content__right}>
@@ -106,21 +123,41 @@ const Product = () => {
             <span className={styles.product__content__right__list}>
               Состав:
             </span>
-            <div className={styles.product__content__right__list__items}>
-              {products.map((product) => (
-                <div
-                  className={styles.product__content__right__list__items__item}
-                >
-                  <Image src={product.photo} alt="product" />
-                  <p>{product.name}</p>
-                </div>
-              ))}
+            <div style={{ position: "relative" }}>
+              <div
+                className={styles.product__content__right__list__items}
+                style={{ overflow: "hidden" }}
+              >
+                {ingredientsView?.length == 0 ? (
+                  <p>{product?.item.description}</p>
+                ) : (
+                  ingredientsView?.map((view) => (
+                    <div
+                      className={
+                        styles.product__content__right__list__items__item
+                      }
+                    >
+                      <div style={{ width: "100px", height: "60px" }}>
+                        <Image
+                          src={` http://localhost:8080/api-v2/product/file/sushies/${view.photoPath}`}
+                          width={64}
+                          height={64}
+                          alt="product"
+                        />
+                      </div>
+
+                      <p>{view.name}</p>
+                    </div>
+                  ))
+                )}
+              </div>
               <button
                 className={styles.product__content__right__list__items__arrow}
               >
                 <Image src={arrow} alt={"arrow"} />
               </button>
             </div>
+
             <div className={styles.product__content__right__switch}>
               <Switch label="Notifications" />
               <p>Безлактозное</p>

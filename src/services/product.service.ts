@@ -1,5 +1,5 @@
 import { $apiWithToken, $apiWithoutToken } from "../api/api";
-import { ISingleProduct } from "../interfaces/product.interface";
+import { IFavorites, ISingleProduct } from "../interfaces/product.interface";
 
 export const ProductService = {
   async getAllProducts(type: string, limit: number = 8, page: number = 1) {
@@ -27,7 +27,9 @@ export const ProductService = {
   },
 
   async getFavoriteById() {
-    const res = await $apiWithToken.get(`product/get-favorite-by-id`);
+    const res = await $apiWithToken.get<IFavorites>(
+      `product/get-favorite-by-id`
+    );
     return res.data;
   },
 };

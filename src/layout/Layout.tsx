@@ -27,6 +27,7 @@ const Layout = ({ children }: ILayout) => {
   return (
     <div className={styles.wrapper}>
       <QueryClientProvider client={queryClient}>
+        <div id="modal-root"></div>
         {isOpen ? <div className={styles.overlay}></div> : ""}
         {isOpen ? <AuthModal isOpen={isOpen} setIsOpen={setIsOpen} /> : ""}
         <Header />

@@ -32,7 +32,7 @@ const Header = () => {
     queryFn: () => AccountService.getProfile(),
   });
 
-  console.log("user", user ? JSON.parse(user) : null);
+  console.log("user", user);
   return (
     <header className={styles.header}>
       <div className={styles.header__container}>
@@ -88,8 +88,6 @@ const Header = () => {
               </Link>
 
               {isClient && user ? (
-                JSON.parse(user)
-              ) : null ? (
                 <Link
                   href={"/profile/address"}
                   className={styles.header__content__buttons__list__profile}

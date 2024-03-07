@@ -14,11 +14,15 @@ export interface AuthState {
   loginGoogle: any;
 }
 export const getLocaleStorageAuth = () => {
-  const authData = window && localStorage ? localStorage.getItem("auth") : "";
-  const parsedAuthData = JSON.parse(authData);
-  const user = parsedAuthData?.state?.user;
+  if (typeof window === "undefined" || typeof localStorage === "undefined") {
+    return null;
+  } else {
+    const authData: any = localStorage.getItem("auth");
+    const parsedAuthData = JSON.parse(authData);
+    const user = parsedAuthData?.state?.user;
 
-  return user;
+    return user;
+  }
 };
 export const authZustand = create<AuthState>()(
   devtools(
@@ -40,7 +44,7 @@ export const authZustand = create<AuthState>()(
                 email: res.email,
               };
 
-              Cookies.set("user", JSON.stringify(user));
+              Cookies.set("user", JSON.stringify(user.id, user.email));
               const expirationDate = new Date();
               expirationDate.setDate(expirationDate.getDate() + 14);
 

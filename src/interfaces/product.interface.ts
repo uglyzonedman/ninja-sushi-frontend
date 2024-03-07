@@ -20,5 +20,18 @@ export interface IProduct {
   updatedAt: string;
   volume: number;
   weight: number;
-  refetch: any;
+  refetch?: any;
+}
+
+export interface IFavorites {
+  items: IFavoritesItem[];
+}
+
+export interface IFavoritesItem {
+  Product: IProduct;
+  accountId: string;
+  createdAt: string;
+  id: string;
+  productId: string;
+  updatedAt: string;
 }

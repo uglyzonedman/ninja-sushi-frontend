@@ -6,6 +6,9 @@ import FavouriteIco from "@/src/components/svgs/FavouriteSvg";
 import PlusIco from "@/src/components/svgs/PlusSvg";
 import classNames from "classnames";
 import { IProduct } from "@/src/interfaces/product.interface";
+import { useAuth } from "@/src/hooks/hooks";
+import { useQuery } from "@tanstack/react-query";
+import { ProductService } from "@/src/services/product.service";
 const Product = ({
   createdAt,
   description,
@@ -17,7 +20,26 @@ const Product = ({
   updatedAt,
   volume,
   weight,
+  refetch,
 }: IProduct) => {
+  const { user } = useAuth();
+  const {
+    data: favorites,
+    isLoading: isLoadingFavorites,
+    refetch: refetchFavorites,
+  } = useQuery({
+    queryKey: ["get-favorite-by-acc-id"],
+    queryFn: () => ProductService.getFavoriteById(),
+    enabled: !!user,
+  });
+
+  const checkFavoriteById = (id: string) => {
+    return isLoadingFavorites
+      ? []
+      : favorites?.items.find((item) => item.productId == id)
+      ? true
+      : false;
+  };
   return (
     <div className={styles.product}>
       <div className={styles.product__image}>
@@ -50,7 +72,11 @@ const Product = ({
         </p>
         <div className={styles.product__footer__buttons}>
           <button
-            className={classNames(styles.product__footer__buttons__favourite)}
+            className={classNames(
+              checkFavoriteById(id)
+                ? styles.product__footer__buttons__favouriteaccept
+                : styles.product__footer__buttons__favourite
+            )}
           >
             <FavouriteIco fill={"#ffffff"} color={"#ffffff"} />
           </button>

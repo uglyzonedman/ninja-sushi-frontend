@@ -1,15 +1,32 @@
 import React from "react";
 import styles from "../profile-layout/ProfileLayout.module.scss";
+import { useAuth } from "@/src/hooks/hooks";
+import { useQuery } from "@tanstack/react-query";
+import { ProductService } from "@/src/services/product.service";
+import Image from "next/image";
+import favoritecontent from "../../../assets/favoritecontent.png";
+import Product from "../../products/product/Product";
 const ProfileFavorite = () => {
+  const { user } = useAuth();
+  const {
+    data: favorites,
+    isLoading: isLoadingFavorites,
+    refetch: refetchFavorites,
+  } = useQuery({
+    queryKey: ["get-favorite-by-acc-id"],
+    queryFn: () => ProductService.getFavoriteById(),
+    enabled: !!user,
+  });
+  console.log(favorites);
   return (
     <>
       <div className={styles.profile__favorite}>
         <h3 className={styles.profile__favorite__tittle}>Избранные товары</h3>
       </div>
-      {/* {user ? (
-        favoriteLoading ? (
+      {user ? (
+        isLoadingFavorites ? (
           []
-        ) : favoriteFetch?.length == 0 ? (
+        ) : favorites?.items.length == 0 ? (
           <div className={styles.profile__favorite__content}>
             <Image alt="favoritecontent" src={favoritecontent} />
             <div className={styles.profile__favorite__content__block}>
@@ -24,21 +41,23 @@ const ProfileFavorite = () => {
           </div>
         ) : (
           <div className={styles.profile__favorite__content__products}>
-            {favoriteFetch?.map((favorite: any) => (
+            {favorites?.items.map((favorite) => (
               <Product
-                product={favorite.product}
-                favoriteCheck={
-                  favoriteLoading
-                    ? null
-                    : favoriteFetch.some(
-                        (item) => item.product.id == favorite.product.id
-                      )
-                }
+                createdAt={favorite.Product.createdAt}
+                description={favorite.Product.description}
+                id={favorite.Product.id}
+                name={favorite.Product.name}
+                photoPath={favorite.Product.photoPath}
+                price={favorite.Product.price}
+                type={favorite.Product.type}
+                updatedAt={favorite.Product.updatedAt}
+                volume={favorite.Product.volume}
+                weight={favorite.Product.weight}
               />
             ))}
           </div>
         )
-      ) : favoriteState?.length == 0 ? (
+      ) : favorites?.items?.length == 0 ? (
         <div className={styles.profile__favorite__content}>
           <Image alt="favoritecontent" src={favoritecontent} />
           <div className={styles.profile__favorite__content__block}>
@@ -52,7 +71,7 @@ const ProfileFavorite = () => {
         </div>
       ) : (
         ""
-      )} */}
+      )}
     </>
   );
 };
