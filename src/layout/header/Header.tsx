@@ -1,4 +1,5 @@
-import React from "react";
+"use client";
+import React, { useEffect, useState } from "react";
 import styles from "./Header.module.scss";
 import Link from "next/link";
 import Image from "next/image";
@@ -10,8 +11,30 @@ import UserIco from "@/src/components/svgs/UserSvg";
 import BasketIco from "@/src/components/svgs/BasketSvg";
 import logo from "../../assets/logo.png";
 import country from "../../assets/country.png";
-
+import { AuthState, authZustand } from "@/src/store/auth.zustand";
+import { useAuth } from "@/src/hooks/hooks";
+import useravatar from "../../assets/user.png";
+import { useQuery } from "@tanstack/react-query";
+import { AccountService } from "@/src/services/account.service";
+import Cart from "@/src/components/ui/cart/Cart";
+import Overlay from "@/src/components/ui/overlay/Overlay";
 const Header = () => {
+  const { isOpen, setIsOpen } = authZustand((state: AuthState) => state);
+
+  const { user } = useAuth();
+
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  const { data: profile, isLoading } = useQuery({
+    queryKey: ["get-profile"],
+    queryFn: () => AccountService.getProfile(),
+  });
+
+  const [isShowCart, setIsShowCart] = useState(false);
   return (
     <header className={styles.header}>
       <div className={styles.header__container}>
@@ -24,19 +47,10 @@ const Header = () => {
               <ArrowIco />
             </button>
           </div>
-          {/*menu*/}
           <div className={styles.header__content__menu}>
-            <Image width={20} height={16} src={country} alt="country" />
+            {/* <Image width={20} height={16} src={country} alt="country" /> */}
             <button className={styles.header__content__menu__country}>
-              {typeof window !== "undefined" ? (
-                localStorage.getItem("cityName") ? (
-                  <p>{localStorage.getItem("cityName")}</p>
-                ) : (
-                  <p>Выберите город</p>
-                )
-              ) : (
-                ""
-              )}
+              АСТАНА
             </button>
             <span>|</span>
             <p className={styles.header__content__menu__value}>RU</p>
@@ -74,7 +88,8 @@ const Header = () => {
               >
                 <FavouriteIco />
               </Link>
-              {/* {user ? (
+
+              {isClient && user ? (
                 <Link
                   href={"/profile/address"}
                   className={styles.header__content__buttons__list__profile}
@@ -83,22 +98,27 @@ const Header = () => {
                 </Link>
               ) : (
                 <button
-                  onClick={() => setIsShowModal(!isShowModal)}
+                  onClick={() => setIsOpen()}
                   className={styles.header__content__buttons__list__user}
                 >
                   <UserIco />
                 </button>
-              )} */}
+              )}
 
-              <button className={styles.header__content__buttons__list__user}>
-                <UserIco />
-              </button>
-
-              <button className={styles.header__content__buttons__list__basket}>
+              <button
+                onClick={() => setIsShowCart((prev) => !prev)}
+                className={styles.header__content__buttons__list__basket}
+              >
                 <p>Корзина</p>
                 <BasketIco />
               </button>
             </ul>
+            {isClient && isShowCart ? (
+              <Cart setIsShowCart={setIsShowCart} />
+            ) : (
+              ""
+            )}
+            {isShowCart && <Overlay />}
           </div>
           <div className={styles.header__burger}></div>
         </div>

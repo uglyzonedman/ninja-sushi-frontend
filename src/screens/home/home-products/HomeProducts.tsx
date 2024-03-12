@@ -7,7 +7,10 @@ import green from "../../../assets/green.png";
 import styles from "./HomeProducts.module.scss";
 import Link from "next/link";
 import HomeProductsProduct from "./home-products-product/HomeProductsProduct";
-const HomeProducts = () => {
+import { useQuery } from "@tanstack/react-query";
+import { ProductService } from "@/src/services/product.service";
+import { IProductsPage } from "@/src/interfaces/product.interface";
+const HomeProducts = ({ title, products, link, refetch }: IProductsPage) => {
   const categories = [
     "Все",
     "Классические",
@@ -35,7 +38,7 @@ const HomeProducts = () => {
     },
   ];
 
-  const products = [
+  const productsList = [
     {
       id: 0,
       name: "Лосось",
@@ -57,25 +60,34 @@ const HomeProducts = () => {
       photo: fish,
     },
   ];
+
   return (
     <div className={styles.products}>
       <div className={styles.products__header}>
         <Link
-          href={`/products/rolls`}
+          href={`/products/${link}`}
           className={styles.products__header__title}
         >
-          Продукт какой-то
+          {title}
         </Link>
         <button className={styles.products__header__view}>Смотреть все</button>
       </div>
       <div className={styles.products__content}>
-        <HomeProductsProduct />
-        <HomeProductsProduct />
-        <HomeProductsProduct />
-        <HomeProductsProduct />
-        <HomeProductsProduct />
-        <HomeProductsProduct />
-        <HomeProductsProduct />
+        {products.map((product) => (
+          <HomeProductsProduct
+            createdAt={product.createdAt}
+            description={product.description}
+            id={product.id}
+            name={product.name}
+            photoPath={product.photoPath}
+            price={product.price}
+            type={product.type}
+            updatedAt={product.updatedAt}
+            volume={product.volume}
+            weight={product.weight}
+            refetch={refetch}
+          />
+        ))}
       </div>
     </div>
   );
