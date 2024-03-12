@@ -98,7 +98,7 @@ const Product = () => {
         <div className={styles.product__content}>
           <div className={styles.product__content__left}>
             <Image
-              src={`http://localhost:8080/api-v2/product/file/sushies/${product?.item.photoPath}`}
+              src={`${URL}/product/file/sushies/${product?.item.photoPath}`}
               width={645}
               height={416}
               alt={"item"}
@@ -139,7 +139,7 @@ const Product = () => {
                     >
                       <div style={{ width: "100px", height: "60px" }}>
                         <Image
-                          src={` http://localhost:8080/api-v2/product/file/sushies/${view.photoPath}`}
+                          src={`${URL}/product/file/sushies/${view.photoPath}`}
                           width={64}
                           height={64}
                           alt="product"

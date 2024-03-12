@@ -460,7 +460,7 @@ const Order = () => {
                       >
                         <div>
                           <Image
-                            src={`http://localhost:8080/api-v2/product/file/sushies/${item.Product.photoPath}`}
+                            src={`${URL}/product/file/sushies/${item.Product.photoPath}`}
                             alt={item.Product.photoPath}
                             width={87}
                             height={87}

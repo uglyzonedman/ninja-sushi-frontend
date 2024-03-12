@@ -45,9 +45,7 @@ const Product = ({
       <div className={styles.product__image}>
         <Image
           src={
-            photoPath == ""
-              ? ""
-              : `http://localhost:8080/api-v2/product/file/sushies/${photoPath}`
+            photoPath == "" ? "" : `${URL}/product/file/sushies/${photoPath}`
           }
           alt="product"
           width={150}

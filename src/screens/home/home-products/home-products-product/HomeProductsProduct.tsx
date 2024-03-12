@@ -12,6 +12,7 @@ import { ProductService } from "@/src/services/product.service";
 import { useAuth } from "@/src/hooks/hooks";
 import { CartService } from "@/src/services/cart.service";
 import { toast } from "react-toastify";
+import { URL } from "@/src/api/api";
 const HomeProductsProduct = ({
   createdAt,
   description,
@@ -98,9 +99,7 @@ const HomeProductsProduct = ({
       <div className={styles.product__image}>
         <Image
           src={
-            photoPath == ""
-              ? ""
-              : `http://localhost:8080/api-v2/product/file/sushies/${photoPath}`
+            photoPath == "" ? "" : `${URL}/product/file/sushies/${photoPath}`
           }
           alt="product"
           width={150}

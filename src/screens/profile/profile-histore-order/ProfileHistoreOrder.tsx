@@ -92,7 +92,7 @@ const ProfileHistoreOrder = () => {
                         }
                       >
                         <Image
-                          src={`http://localhost:8080/api-v2/product/file/sushies/${item.Product.photoPath}`}
+                          src={`${URL}/product/file/sushies/${item.Product.photoPath}`}
                           alt="order"
                           width={54}
                           height={54}

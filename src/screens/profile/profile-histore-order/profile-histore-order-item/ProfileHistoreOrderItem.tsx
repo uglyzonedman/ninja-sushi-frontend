@@ -25,7 +25,7 @@ const ProfileHistoreOrderItem = ({
         className={styles.profile__content__history__process__order__item__left}
       >
         <Image
-          src={`http://localhost:8080/api-v2/product/file/sushies/${photoPath}`}
+          src={`${URL}/product/file/sushies/${photoPath}`}
           height={64}
           width={64}
           alt="orderItem"

@@ -167,7 +167,7 @@ const OrderSingle = () => {
                       alt="test"
                       width={54}
                       height={54}
-                      src={`http://localhost:8080/api-v2/product/file/sushies/${item.Product.photoPath}`}
+                      src={`${URL}/product/file/sushies/${item.Product.photoPath}`}
                     />
                   </div>
                 ))}
