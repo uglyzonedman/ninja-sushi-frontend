@@ -10,6 +10,8 @@ import { IProduct } from "@/src/interfaces/product.interface";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { ProductService } from "@/src/services/product.service";
 import { useAuth } from "@/src/hooks/hooks";
+import { CartService } from "@/src/services/cart.service";
+import { toast } from "react-toastify";
 const HomeProductsProduct = ({
   createdAt,
   description,
@@ -26,9 +28,50 @@ const HomeProductsProduct = ({
   const { mutate } = useMutation({
     mutationKey: ["change-favorite"],
     mutationFn: (id: string) => ProductService.changeFavorite(id),
-    onSuccess: () => {
+    onSuccess: (data) => {
       refetch();
       refetchFavorites();
+      console.log(data);
+      if (data.action == "create") {
+        toast.success(`Вы добавили ${data.item.Product.name} в избранное`, {
+          position: "bottom-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+      } else {
+        toast.error(`Вы удалили ${data.item.Product.name} из избранного`, {
+          position: "bottom-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+      }
+    },
+  });
+
+  const { mutate: addCart } = useMutation({
+    mutationKey: ["create-cart"],
+    mutationFn: (id: string) => CartService.addToCart(id),
+    onSuccess(data) {
+      toast.success(`Вы добавили ${data.Product.name} в корзину`, {
+        position: "bottom-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
     },
   });
   const { user } = useAuth();
@@ -41,8 +84,6 @@ const HomeProductsProduct = ({
     queryFn: () => ProductService.getFavoriteById(),
     enabled: !!user,
   });
-
-  console.log("favorites", favorites);
 
   const checkFavoriteById = (id: string) => {
     return isLoadingFavorites
@@ -95,7 +136,10 @@ const HomeProductsProduct = ({
           >
             <FavouriteIco fill={"#ffffff"} color={"#ffffff"} />
           </button>
-          <button className={styles.product__footer__buttons__plus}>
+          <button
+            className={styles.product__footer__buttons__plus}
+            onClick={() => addCart(id)}
+          >
             <PlusIco />
           </button>
         </div>

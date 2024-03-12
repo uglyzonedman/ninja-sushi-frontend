@@ -1,12 +1,11 @@
 import React from "react";
-import styles from "../../profile-layout/ProfileLayout.module.scss";
-import Image from "next/image";
-import orderItem from "../../../../assets/orderitem.png";
+import styles from "./OrderSingleProduct.module.scss";
 import { IProduct } from "@/src/interfaces/product.interface";
+import Image from "next/image";
 interface IProfileHistoryOrderItem extends IProduct {
   quantity: number;
 }
-const ProfileHistoreOrderItem = ({
+const OrderSingleProduct = ({
   createdAt,
   description,
   id,
@@ -122,4 +121,4 @@ const ProfileHistoreOrderItem = ({
   );
 };
 
-export default ProfileHistoreOrderItem;
+export default OrderSingleProduct;

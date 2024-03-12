@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import styles from "./ProfileLayout.module.scss";
 import Link from "next/link";
 import classNames from "classnames";
@@ -16,15 +16,19 @@ import ProfileFavorite from "../profile-favorite/ProfileFavorite";
 import ProfileHistoreOrder from "../profile-histore-order/ProfileHistoreOrder";
 import { useQuery } from "@tanstack/react-query";
 import { AccountService } from "@/src/services/account.service";
+import ProfileModal from "@/src/components/ui/profile-modal/ProfileModal";
+import Overlay from "@/src/components/ui/overlay/Overlay";
 const ProfileLayout = () => {
   const pathName = usePathname();
   const { data: profile, isLoading: isLoadingProfile } = useQuery({
     queryKey: ["get-profile"],
     queryFn: () => AccountService.getProfile(),
   });
+
+  const [isShow, setIsShow] = useState(false);
   return (
     <div className={styles.profile}>
-      {/* {isShow ? <div className={styles.profile__overlay}></div> : ""} */}
+      {isShow ? <Overlay /> : ""}
       <div className={styles.profile__container}>
         <div className={styles.profile__content}>
           <div className={styles.profile__content__left}>
@@ -148,7 +152,7 @@ const ProfileLayout = () => {
                       : profile.account.login}
                   </h3>
                   <button
-                    // onClick={() => setIsShow(!isShow)}
+                    onClick={() => setIsShow(!isShow)}
                     className={
                       styles.profile__content__left__user__info__text__button
                     }
@@ -178,7 +182,7 @@ const ProfileLayout = () => {
           </div>
         </div>
       </div>
-      {/* {isShow ? <ProfileModal setIsShow={setIsShow} /> : ""} */}
+      {isShow ? <ProfileModal setIsShow={setIsShow} /> : ""}
     </div>
   );
 };

@@ -52,13 +52,13 @@ const Footer = () => {
               Оформить заказ:
             </p>
             <li className={styles.footer__content__nav__item}>
-              <Link href="/">+38 (067) 436 61 27</Link>
+              <Link href="/">+7 778 425 99 76</Link>
             </li>
             <li className={styles.footer__content__nav__item}>
-              <Link href="/">+38 (066) 031 76 30</Link>
+              <Link href="/">+7 778 425 99 76</Link>
             </li>
             <li className={styles.footer__content__nav__item}>
-              <Link href="/">+38 (093) 924 98 28</Link>
+              <Link href="/">+7 778 425 99 76</Link>
             </li>
           </ul>
           <ul className={styles.footer__content__nav}>
@@ -105,9 +105,12 @@ const Footer = () => {
         <div className={styles.footer__content__footer}>
           <Link href="/test">Политика конфиденциальности</Link>
           <div className={styles.footer__content__footer__cards}>
-            {[...new Array(3).keys()].map((i) => (
-              <div className={styles.footer__content__footer__cards__card}>
-                <Image key={i} src={card} alt="card1" />
+            {Array.from({ length: 3 }).map((_, i) => (
+              <div
+                className={styles.footer__content__footer__cards__card}
+                key={i}
+              >
+                <Image src={card} alt={`card${i}`} />
               </div>
             ))}
           </div>

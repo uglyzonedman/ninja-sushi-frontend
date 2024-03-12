@@ -1,3 +1,4 @@
+import { IUpdateProfile } from "./../interfaces/account.interface";
 import { $apiWithToken, $apiWithoutToken } from "@/src/api/api";
 export const AccountService = {
   async login(email: string, password: string) {
@@ -26,6 +27,11 @@ export const AccountService = {
 
   async getProfile() {
     const res = await $apiWithToken.get("account/get-profile");
+    return res.data;
+  },
+  async updateProfile({ login }: IUpdateProfile) {
+    const res = await $apiWithToken.put("account/update-profile", { login });
+
     return res.data;
   },
 };

@@ -1,5 +1,5 @@
 "use client";
-import React, { useRef, useState } from "react";
+import React, { MouseEvent, RefObject, useRef, useState } from "react";
 import banner1 from "../../../assets/banner1.webp";
 import banner2 from "../../../assets/banner2.webp";
 import banner3 from "../../../assets/banner3.webp";
@@ -53,7 +53,7 @@ const HomeSlider = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
   const [dragStart, setDragStart] = useState(0);
-  const sliderRef = useRef(null);
+  const sliderRef: RefObject<HTMLDivElement> = useRef(null);
 
   const goToSlide = (index: number) => {
     setCurrentIndex(index);
@@ -78,17 +78,17 @@ const HomeSlider = () => {
     }
   };
 
-  const handleMouseDown = (event) => {
+  const handleMouseDown = (event: MouseEvent<HTMLDivElement>) => {
     setIsDragging(true);
     setDragStart(event.clientX);
   };
 
-  const handleMouseMove = (event) => {
+  const handleMouseMove = (event: MouseEvent<HTMLDivElement>) => {
     if (!isDragging) return;
 
     const currentPosition = event.clientX;
     const dragDistance = currentPosition - dragStart;
-    const sliderWidth = sliderRef.current.offsetWidth;
+    const sliderWidth: any = sliderRef.current?.offsetWidth;
     const dragThreshold = sliderWidth * 0.1;
 
     if (dragDistance > dragThreshold) {

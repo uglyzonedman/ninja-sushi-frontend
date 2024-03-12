@@ -16,6 +16,8 @@ import { useAuth } from "@/src/hooks/hooks";
 import useravatar from "../../assets/user.png";
 import { useQuery } from "@tanstack/react-query";
 import { AccountService } from "@/src/services/account.service";
+import Cart from "@/src/components/ui/cart/Cart";
+import Overlay from "@/src/components/ui/overlay/Overlay";
 const Header = () => {
   const { isOpen, setIsOpen } = authZustand((state: AuthState) => state);
 
@@ -32,7 +34,7 @@ const Header = () => {
     queryFn: () => AccountService.getProfile(),
   });
 
-  console.log("user", user);
+  const [isShowCart, setIsShowCart] = useState(false);
   return (
     <header className={styles.header}>
       <div className={styles.header__container}>
@@ -103,11 +105,20 @@ const Header = () => {
                 </button>
               )}
 
-              <button className={styles.header__content__buttons__list__basket}>
+              <button
+                onClick={() => setIsShowCart((prev) => !prev)}
+                className={styles.header__content__buttons__list__basket}
+              >
                 <p>Корзина</p>
                 <BasketIco />
               </button>
             </ul>
+            {isClient && isShowCart ? (
+              <Cart setIsShowCart={setIsShowCart} />
+            ) : (
+              ""
+            )}
+            {isShowCart && <Overlay />}
           </div>
           <div className={styles.header__burger}></div>
         </div>

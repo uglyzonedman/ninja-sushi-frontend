@@ -1,5 +1,8 @@
 import styles from "./Switch.module.scss";
-const Switch = ({ label }: any) => {
+interface ISwitch {
+  label: string;
+}
+const Switch = ({ label }: ISwitch) => {
   return (
     <div className={styles.container}>
       <div className={styles.container__switch}>

@@ -8,6 +8,7 @@ import styles from "./Layout.module.scss";
 import { AuthState, authZustand } from "../store/auth.zustand";
 import AuthModal from "../components/ui/auth-modal/AuthModal";
 import Cookies from "js-cookie";
+import { ToastContainer } from "react-toastify";
 interface ILayout {
   children: React.ReactNode;
 }
@@ -22,7 +23,6 @@ const queryClient = new QueryClient({
 
 const Layout = ({ children }: ILayout) => {
   const { isOpen, setIsOpen } = authZustand((state: AuthState) => state);
-  let user = Cookies.get("user");
 
   return (
     <div className={styles.wrapper}>
@@ -34,6 +34,7 @@ const Layout = ({ children }: ILayout) => {
         <Navigation />
         <main className={styles.main}>{children}</main>
         <Footer />
+        <ToastContainer theme="light" />
       </QueryClientProvider>
     </div>
   );
